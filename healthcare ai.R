@@ -5,3 +5,4 @@ quick_models
 predictions <- predict(quick_models)
 predictions
 plot(predictions)
+#checking Git
