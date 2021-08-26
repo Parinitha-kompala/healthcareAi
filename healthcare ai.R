@@ -102,3 +102,4 @@ new_patient_2 <- data.frame(
   pedigree = .2,
   diabetes = "N")
 predict(regression_models, new_patient_2)
+
