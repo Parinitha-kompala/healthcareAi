@@ -2,35 +2,33 @@
 title: "HealthCareAI"
 author: "Parinitha Kompala"
 date: "8/26/2021"
-output: pdf_document
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
 ```{r loading library}
 library(healthcareai)
 ```
 analysing the pima data
 
-```{r pressure, echo=FALSE}
+```{r }
 pima_diabetes #inbuit dataframe
 dim(pima_diabetes)
 summary(pima_diabetes)
 ```
-```{r pressure, echo=FALSE}
+```{r }
 str(pima_diabetes)
 ```
 Machine learing models
 model 1-
-```{r pressure, echo=FALSE}
+```{r }
 head(pima_diabetes)
 names(pima_diabetes)
 
@@ -41,38 +39,38 @@ predictions
 plot(predictions)
 ```
 plotting the output od prediction 1
-```{r pressure, echo=FALSE}
+```{r }
 plot(predictions)
 ```
 prediction2-
-```{r pressure, echo=FALSE}
+```{r}
 a_quick_models <- machine_learn(pima_diabetes, plasma_glucose, outcome = diabetes)
 a_quick_models
 a_predictions <- predict(quick_models)
 a_predictions
 ```
 plot of prediction2
-```{r pressure, echo=FALSE}
+```{r}
 plot(a_predictions)
 ```
-```{r pressure, echo=FALSE}
+```{r }
 quick_models %>%
   predict(outcome_groups = 2) %>%
   plot()
 ```
-```{r pressure, echo=FALSE}
+```{r }
 a_quick_models %>%
   predict(outcome_groups = 2) %>%
   plot()
 ```
 Doing some data profiling
-```{r pressure, echo=FALSE}
+```{}
 missingness(pima_diabetes)
 missingness(pima_diabetes) %>%
   plot()
 ```
 Data preparation
-```{r pressure, echo=FALSE}
+```{r }
 prep_data
 split_data <- split_train_test(d = pima_diabetes,
                                outcome = diabetes,
@@ -83,7 +81,7 @@ prepped_training_data <- prep_data(split_data$train, patient_id, outcome = diabe
                                    collapse_rare_factors = FALSE)
 ```
 Data training 
-```{r pressure, echo=FALSE}
+```{r }
 models <- tune_models(d = prepped_training_data,
                       outcome = diabetes,
                       tune_depth = 25,
@@ -93,29 +91,29 @@ models["Random Forest"] %>%
   plot()
 ```
 faster madel traing
-```{r pressure, echo=FALSE}
+```{r }
 untuned_rf <- flash_models(d = prepped_training_data,
                            outcome = diabetes,
                            models = "RF",
                            metric = "PR")
 ```
 Model interpretations
-```{r pressure, echo=FALSE}
+```{r }
 interpret(models) %>%
   plot()
 ```
 Variable importance
-```{r pressure, echo=FALSE}
+```{r }
 get_variable_importance(models) %>%
   plot()
 ```
 Exploring the data 
-```{r pressure, echo=FALSE}
+```{r}
 explore(models) %>%
   plot()
 ```
 Prediction
-```{r pressure, echo=FALSE}
+```{r}
 predict(models)
 test_predictions <-
   predict(models,
@@ -124,29 +122,28 @@ test_predictions <-
   )
 ```
 
-```{r pressure, echo=FALSE}
+```{r}
 plot(test_predictions)
 ```
 Saving Moving Loading models
-```{r pressure, echo=FALSE}
+```{r}
 save_models(models, file = "my_models.RDS")
 models <- load_models("my_models.RDS")
 ```
-Regretion models
-1.
-```{r pressure, echo=FALSE}
+
+```{r}
 regression_models <- machine_learn(pima_diabetes, patient_id, outcome = age)
 summary(regression_models)
 ```
 Regretion model
 2.
-```{r pressure, echo=FALSE}
+```{r}
 a_regression_models <- machine_learn(pima_diabetes, pregnancies, outcome = age)
 summary(a_regression_models)
 ```
 
 #prediction on a hypothetical new patient 1
-```{r pressure, echo=FALSE}
+```{r}
 new_patient <- data.frame(
   pregnancies = 0,
   plasma_glucose = 80,
@@ -159,7 +156,7 @@ new_patient <- data.frame(
 predict(regression_models, new_patient)
 ```
 #prediction on a hypothetical new patient 2
-```{r pressure, echo=FALSE}
+```{r}
 new_patient_2 <- data.frame(
   pregnancies = 3,
   plasma_glucose = 130,
